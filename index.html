@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <title>Wahlflopper</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+	<link rel="stylesheet" href="css/style.css" type="text/css"
+	medium="screen" />
+
+	<style>
+		.jumbotron h1 {
+			font-size: 38px;
+		}
+
+
+
+		#sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
+  #sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
+  
+	</style>
+  <!-- Latest compiled and minified JavaScript -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+     <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Wahlflopper</a>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+      	<div class="page-header">
+  			<h1>Remix your election defeat videos here <small>BTW13</small></h1>
+		</div>
+    
+        <!-- panel-success for droppable item -->
+        <div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">Mixer</div>
+		  <div class="panel-body mixer">
+	    	<ul id="droppable sortable">
+	    	</ul>
+		  </div>
+
+		 
+		</div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>One fine body&hellip;</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+    <div class="videos container">
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-lg-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+       </div>
+        <div class="col-lg-4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+    </div> <!-- /container -->
+    <script src="./vendor/mustache.js"></script>
+	<!-- todo: boot load videos 
+			drag and drop
+	-->
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+    $(function() {
+    // some hairy user interaction
+	    // $( ".draggable" ).draggable();
+	    // $( "#droppable" ).droppable({
+	    //   drop: function( event, ui ) {
+	    //     $( this )
+	    //       .addClass( "panel-success" );
+	    //   }
+	    // });
+  
+  		$( "#sortable" ).sortable();
+    	$( "#sortable" ).disableSelection();
+
+  	// some templates for videos
+    	var userPicked = {'items':[{
+    	  'id':4,	
+		  'title': "OMG",
+		  'thumb': "path"
+		}, {
+		  'id':2,
+		  'title': "OMG2",
+		  'thumb': "path"
+		}, {
+		  'id':1,
+		  'title': "OMG3",
+		  'thumb': "path"
+		}]};
+
+		var mixer = Mustache.render("{{#items}}<li class='item'><h3>{{title}}</h3><img src='{{thumb}}' /></li>{{/items}}", userPicked);
+
+
+		var videos = Mustache.render("{{#items}}<div class='draggable item'><h3>{{title}}</h3><img src='{{thumb}}' /></div>{{/items}}", userPicked); // change this to default videos
+
+
+		$('.mixer').html(mixer);
+		$('.videos').html(videos);
+	});
+    </script>
+  </body>
+</html>
