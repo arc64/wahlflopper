@@ -73,10 +73,8 @@
 
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+        <div class="col-lg-4 picker">
+          
         </div>
       </div>
       <hr>
@@ -110,8 +108,9 @@
   
   
 
-  	// some templates for videos
-    	var userPicked = {'items':[{
+  		// data for videos
+    	var userPicked = {
+    	'items':[{
     	  'id':1,	
 		  'title': "OMG",
 		  'thumb': "path"
@@ -125,6 +124,26 @@
 		  'thumb': "path"
 		}]};
 
+		var videos = {'items':[{
+    	  'id':1,	
+		  'title': "OMG",
+		  'thumb': "path"
+		}, {
+		  'id':2,
+		  'title': "OMG2",
+		  'thumb': "path"
+		}, {
+		  'id':3,
+		  'title': "OMG3",
+		  'thumb': "path"
+		}, {
+		  'id':4,
+		  'title': "OMG4",
+		  'thumb': "path"
+		}
+		]};
+
+		// some method madness
 		function removeItemFromMixer(id) {
 			userPicked['items'] = $.grep(userPicked['items'], function(e){ return e.id != id; });
     	}
@@ -137,6 +156,7 @@
     		return $.grep(userPicked['items'], function(e){ return e.id == id; });
     	}
 
+    	// templates
 		var videoTemplate = ['{{#items}}<li data-videoid="{{id}}" class="video col-2 col-sm-2 col-lg-2">',
 			'<div class="panel panel-default">',
 		        '<div class="panel-heading">',
@@ -174,19 +194,30 @@
 		'</div><!-- /.modal -->'
     	].join('');
 
+    	var pickerTemplate = '{{#items}}<div class="item col-4 col-sm-4 col-lg-4"><h3>{{title}}</h3><img src="{{thumb}}" /><a href="#" type="button" class="btn btn-primary">Add to remix</a></div>{{/items}}';
+
 	    function renderMixer(){
 	    	$('.mixer #sortable').html(Mustache.render(videoTemplate, userPicked));
 	    	return;
 	    }
 
-	    // function renderModel(video){
-	    // 	$('.body').append(Mustache.render(videoTemplate, video);
-	    // 	return;
-	    // }
+	    function renderModel(){
+	    	var video = 0;// todo: popcorn 
+	    	$('.body').append(Mustache.render(modelTemplate, video));
+	    	return;
+	    }
 
-		var videos = Mustache.render("{{#items}}<div class='draggable item'><h3>{{title}}</h3><img src='{{thumb}}' /></div>{{/items}}", userPicked); 
-		// change this to default videos
+		function renderPicker(){
+			//$('.picker').append(Mustache.render(pickerTemplate, videos))
+		};
 
+		// getting down to business
+		// render some stuff
+		renderMixer(); 
+		renderPicker();
+		//renderModal();
+
+		// event heaven
 		$('.videos').html(videos);
 
 		$('.mixer').delegate( ".close", "click", function(e) {
@@ -196,18 +227,18 @@
 		 	//updateURI();
 		});
 
-		$('.glyphicon-play').click(function(){
-			//var urli = //resolve items;
-			// open modal and play video
-		});
+		// $('.glyphicon-play').click(function(){
+		// 	//var urli = //resolve items;
+		// 	// open modal and play video
 
-		renderMixer(); 
+		// });
 
 // todo: smallify for mobile
 // todo: add items from list
 // todo: create list
 // todo: cursor to grab / plus state indicator
 // todo: hash for url
+// remix or share
 		$( "#sortable" ).sortable({
       		placeholder: "video",
   			stop: function(event, ui) {
