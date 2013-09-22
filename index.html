@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap 101 Template</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <title>Wahlflopper</title>
@@ -22,7 +22,8 @@
 
 
 		#sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
-  #sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
+  		
+  		#sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
   
 	</style>
   <!-- Latest compiled and minified JavaScript -->
@@ -156,7 +157,21 @@
 		  'thumb': "path"
 		}]};
 
-		var mixer = Mustache.render("{{#items}}<li class='item'><h3>{{title}}</h3><img src='{{thumb}}' /></li>{{/items}}", userPicked);
+		var videoTemplate = ['{{#items}}<li class="item">',
+			'<div class="panel panel-default">',
+		        '<div class="panel-heading video">',
+		          '<h3 class="panel-title"><h3>{{title}}</h3>',
+		          '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',
+		          '<iframe width="420" height="315" src="//www.youtube.com/embed/IFVz-aUw7LM" frameborder="0" allowfullscreen></iframe>',
+		        '</div>',
+		        '<div class="panel-body">',
+		        '</div>',
+	      	'</div>',
+	    '</li>{{/items}}'];
+
+	    console.log(videoTemplate)
+
+		var mixer = Mustache.render(videoTemplate.join(), userPicked);
 
 
 		var videos = Mustache.render("{{#items}}<div class='draggable item'><h3>{{title}}</h3><img src='{{thumb}}' /></div>{{/items}}", userPicked); // change this to default videos
