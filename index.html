@@ -109,7 +109,7 @@
   
 
   		// data for videos
-    	var userPicked = {
+    	var inMixer = {
     	'items':[{
     	  'id':1,	
 		  'title': "OMG",
@@ -145,15 +145,17 @@
 
 		// some method madness
 		function removeItemFromMixer(id) {
-			userPicked['items'] = $.grep(userPicked['items'], function(e){ return e.id != id; });
+			inMixer['items'] = $.grep(inMixer['items'], function(e){ return e.id != id; });
+			$('body').data('videoid', id).removeClass('inMixer');
     	}
 
-    	function addItemToMixer(item, index) {
-    		var a = userPicked['items'].splice(index, 0, item);
+    	function addItemToMixer(id, item, index) {
+    		inMixer['items'].splice(index, 0, item);
+    		$('body').data('videoid', id).addClass('inMixer');
     	}
 
     	function getItem(id) {
-    		return $.grep(userPicked['items'], function(e){ return e.id == id; });
+    		return $.grep(inMixer['items'], function(e){ return e.id == id; });
     	}
 
     	// templates
@@ -194,10 +196,10 @@
 		'</div><!-- /.modal -->'
     	].join('');
 
-    	var pickerTemplate = '{{#items}}<div class="item col-4 col-sm-4 col-lg-4"><h3>{{title}}</h3><img src="{{thumb}}" /><a href="#" type="button" class="btn btn-primary">Add to remix</a></div>{{/items}}';
+    	var pickerTemplate = '{{#items}}<div class="item col-4 col-sm-4 col-lg-4" data-videoid={{id}}><h3>{{title}}</h3><img src="{{thumb}}" /><a href="#" type="button" class="btn btn-primary add">Add to remix</a></div>{{/items}}';
 
 	    function renderMixer(){
-	    	$('.mixer #sortable').html(Mustache.render(videoTemplate, userPicked));
+	    	$('.mixer #sortable').html(Mustache.render(videoTemplate, inMixer));
 	    	return;
 	    }
 
@@ -208,8 +210,8 @@
 	    }
 
 		function renderPicker(){
-			//$('.picker').append(Mustache.render(pickerTemplate, videos))
-		};
+			$('.picker').append(Mustache.render(pickerTemplate, videos));
+		}
 
 		// getting down to business
 		// render some stuff
@@ -218,12 +220,22 @@
 		//renderModal();
 
 		// event heaven
-		$('.videos').html(videos);
+		// $('.videos').html(videos);
 
 		$('.mixer').delegate( ".close", "click", function(e) {
 			vId = $(this).closest('.video').data('videoid');
 			removeItemFromMixer(vId); 
 		 	renderMixer(); 
+		 	//updateURI();
+		});
+
+		$('.picker').delegate( ".add", "click", function(e) {
+			vId = $(this).closest('.video').data('videoid');
+			console.log(videos['items']);
+			//todo: don't need to do this, just look it up
+			//addItemToMixer(vId, videos['items'][vId], inMixer['items'].length); 
+		 	//renderMixer(); 
+
 		 	//updateURI();
 		});
 
@@ -238,19 +250,17 @@
 // todo: create list
 // todo: cursor to grab / plus state indicator
 // todo: hash for url
-// remix or share
+// todo: remix or share
+// todo: make shit fade in and show user where they are
 		$( "#sortable" ).sortable({
       		placeholder: "video",
   			stop: function(event, ui) {
   				var id = ui.item.data('videoid');
   				var item = getItem(id);
   				removeItemFromMixer(id);
-  				addItemToMixer(item[0], ui.item.index());
+  				addItemToMixer(id, item[0], ui.item.index());
 		    }
     	});
-
-    	// $( "#sortable" ).on( "sortupdate", function( event, ui )
-
 	});
     </script>
   </body>
