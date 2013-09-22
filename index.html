@@ -18,10 +18,8 @@
 		.jumbotron h1 {
 			font-size: 38px;
 		}
-
-		#sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
   		
-  		#sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
+  		#sortable li { }
   
   	/*	.video {
   			-moz-grab: ;
@@ -58,7 +56,7 @@
         <div class="panel panel-default">
 		  <div class="panel-heading">Mixer</div>
 		  <div class="panel-body mixer">
-	    	<ul id="sortable">
+	    	<ul id="sortable" class="list-unstyled list-inline">
 	    	</ul>
 		  </div>
 		</div>
@@ -94,7 +92,7 @@
           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
           <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
         </div>
-      
+      </div>
       <hr>
 
       <footer>
@@ -153,15 +151,17 @@
     		return $.grep(userPicked['items'], function(e){ return e.id == id; });
     	}
 
-		var videoTemplate = ['{{#items}}<li data-videoid="{{id}}" class="video col-6 col-sm-3 col-lg-4">',
+		var videoTemplate = ['{{#items}}<li data-videoid="{{id}}" class="video col-2 col-sm-2 col-lg-2">',
 			'<div class="panel panel-default">',
 		        '<div class="panel-heading">',
 		        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',
-		          '<h3 class="panel-title"><h3>{{title}}</h3>',
+		          '<h3 class="panel-title"><h3></h3>',
 		          
 				'</div>',
 		        '<div class="panel-body">',
-		          '<iframe width="420" height="315" src="//www.youtbe.com/embed/IFVz-aUw7LM" frameborder="0" allowfullscreen></iframe>',
+		          '<a href="#" class="thumbnail">',
+				      '<img data-src="holder.js/138%x180" alt="...">',
+				   '</a>',
 		        '</div>',
 	      	'</div>',
 	    '</li>{{/items}}'].join('');
