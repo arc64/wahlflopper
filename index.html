@@ -24,7 +24,7 @@
 
 
 	<style>
-
+		/* messy !*/
 		#skeleton {
 			display: none;
 		}
@@ -46,8 +46,6 @@
 		.jumbotron h1 {
 			font-size: 38px;
 		}
-  		
-  		#sortable li { }
   
   		.row {
   			margin-left: -6px;
@@ -61,10 +59,21 @@
 			cursor: pointer;
 		}
 
+		/* .mixer */
 		.mixer img {
             width: 110px;
 		}
   
+  		.video-highlight { 
+  			height: 1.5em; 
+  			line-height: 1.2em; 
+  			border: 1px solid red;
+  			width: 200px;
+  			display: block;
+  			min-height: 250px;
+  		}
+
+  		/* .picker */
   		.play-video {
 			display: block;
 			overflow: auto;
@@ -129,7 +138,11 @@
         </div>
       </div>
       <hr>
-
+	<div class="vids">
+      <div id="skeleton">
+        <div class="layer"></div>
+      </div>
+    </div>
       <footer>
         <p>Code can be found <a href="https://github.com/arc64/wahlflopper">on github</a></p>
       </footer>
@@ -261,18 +274,20 @@
 	    '</li>{{/items}}'].join('');
 
 
-	    var modelTemplate = [
+	    var modalTemplate = [
 	    '<!-- Modal -->',
 		'<div class="modal fade">',
 		'<div class="modal-dialog">',
 		'<div class="modal-content">',
-		'<div class="modal-header">',
-		'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
-		'<h4 class="modal-title">{{title}}</h4>',
-		'</div>',
+			'<div class="modal-header">',
+				'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
+				'<h4 class="modal-title"></h4>',
+			'</div>',
+		'<div class="vids">',
 		'<div id="skeleton" class="modal-body">',
         '<div class="layer">',
-		'{{embed}}',
+		
+		'</div>',
 		'</div>',
 		'</div>',
 		'<div class="modal-footer">',
@@ -293,7 +308,7 @@
 	    		// todo : more elegant way of doing this
 	    		var tmp = clips['items'][value];
 	    		tmp['index'] = i+1;
-	    		console.log(tmp)
+	    		//console.log(tmp)
  				videos['items'].push(tmp);	
 			});
 			var template = Handlebars.compile(videoTemplate);
@@ -301,10 +316,9 @@
 	    	return;
 	    }
 
-	    function renderModel(){
-	    	var video = 0;// todo: popcorn 
-	    	var template = Handlebars.compile(modelTemplate);
-	    	$('.body').append(template(video));
+	    function renderModal(){ 
+	    	var template = Handlebars.compile(modalTemplate);
+	    	$('body').append(template({})); // todo: put in real videos
 	    	return;
 	    }
 
@@ -345,15 +359,17 @@
 		// });
 
 // todo: smallify for mobile
-// todo: add items from list
-// todo: create list
 // todo: cursor to grab / plus state indicator
 // todo: hash for url
 // todo: remix or share
 // todo: make shit fade in and show user where they are
 // todo: now that you ahve changed to hanlebars change the templates
+// todo: fix sortable style - it is hard to see 
+// todo: boot load videos in picker
+
+		// Sort the items in the picker
 		$( "#sortable" ).sortable({
-      		placeholder: "video",
+      		placeholder: "video-hightlight",
   			stop: function(event, ui) {
   				var id = ui.item.data('videoid');
   				var item = getItem(id);
@@ -362,51 +378,57 @@
 		    }
     	});
 
-
+    	$( "#sortable" ).disableSelection();
 
     	// Popcorn playback
+    	var skeleton = $('#skeleton').html(),
+        	$videos = $('.vids');
+        //console.log(skeleton, $videos)
 
-    	 
-    	// var skeleton = $('#skeleton').html(),
-     //    $videos = $('.videos');
-     //    $.each(clips, function(k, v) {
-     //      $el = $(skeleton);
-     //      $el.prop('id', k);
-     //      $videos.append($el);
-     //      v.$el = $el;
-     //      v.pc = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
-     //      v.pc.pause();
-     //      v.pc.autoplay(false);
-     //      v.pc.on('loadedmetadata', function() {
-     //        v.pc.currentTime(v.in);
-     //        //
-     //      });
-     //    });
+        $.each(clips, function(k, v) {
 
-        //var sequence = ['zur-tagesordnung', 'bittere-cdu', 'jfk-bin-ein-berliner'];  'bittere-cdu', 
-        var sequence = ['ruckrede', 'mickey', 'angieschmerz', 'zur-tagesordnung', 'jfk-bin-ein-berliner', 'herzchen', 'hauptstadtchefin'];
+          $el = $(skeleton);
+          $el.prop('id', k);
+          $videos.append($el);
+          v.$el = $el;
+          v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
+          console.log('something',v.$el.show());
+          v.popcorn.pause();
+          v.popcorn.autoplay(false);
+          v.popcorn.on('loadedmetadata', function() {
+            v.popcorn.currentTime(v.in);
+            
+          });
+        });
 
         function playback(sequence, doneCallback) {
-          var k = sequence[0],
-              v = clips[k];
+          var k = inMixer[0];
+          var v = sequence['items'][k];
+              console.log(v)
+
           v.$el.show();
           //v.pc.currentTime();
-          v.pc.unmute();
-          v.pc.play(v.in);
-          v.pc.cue(v.out, function() {
-            v.pc.pause();
-            v.$el.hide();
-            var rem = sequence.slice(1);
-            if (!rem.length) doneCallback();
-            playback(rem, doneCallback);
-            //console.log(rem);
-          });
-        }
+          v.popcorn.unmute();
+          v.popcorn.play(v.in);
+
+          	v.popcorn.cue(v.out, function() {
+	            
+	            v.popcorn.pause();
+	            v.$el.hide();
+	            var rem = sequence.slice(1);
+
+	            if (!rem.length) doneCallback();
+
+	            	playback(rem, doneCallback);
+	            	//console.log(rem);
+	          	});
+        	}
         
-        //window.seq = sequence;
-        //window.playback = playback;
-        //playback(sequence);
-	});
+	        window.seq = clips;
+	        window.playback = playback;
+	        playback(clips);
+		});
+
     </script>
   </body>
 </html>
