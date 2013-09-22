@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,11 +56,46 @@
   		.panel-body {
 			padding: 0;
 		}
-  	/*	.video {
-  			-moz-grab: ;
-  		}*/
+
+		li { 
+			cursor: pointer;
+		}
+
+		.mixer img {
+            width: 110px;
+		}
+  
+  		.play-video {
+			display: block;
+			overflow: auto;
+			margin: 0;
+			padding: 0;
+  		}
+
+  		.play {
+  			position:absolute;
+		    top:0;
+		    left:0;
+		    right:0;
+		    bottom:0;
+		    background-color: rgba(0, 0, 0, 0.6);
+		    background: url(data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAATSURBVBhXY2RgYNgHxGAAYuwDAA78AjwwRoQYAAAAAElFTkSuQmCC) repeat scroll transparent\9; /* ie fallback png background image */
+		    z-index:9999;
+		    color:white;
+		    line-height: 3em;
+			font-size: 40px;
+		    text-align: center;
+  		}
+
+  		.picker .video {
+  			position: abosolute;
+  		}
+
+  		.picker .add {
+  			margin-left: 10px;
+  		}
 	</style>
-  <!-- Latest compiled and minified JavaScript -->
+  	<!-- Latest compiled and minified JavaScript -->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -69,24 +104,10 @@
     <![endif]-->
   </head>
   <body>
-     <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Wahlflopper</a>
-        </div>
-        
-      </div>
-    </div>
-
     <div class="jumbotron">
       <div class="container">
       	<div class="page-header">
-  			<h1>Remix your election defeat videos here <small>BTW13</small></h1>
+  			<h1>Wahlflopper <small>Remix your BTW13 election defeat videos here</small></h1>
 		</div>
         <div class="panel panel-default">
 		  <div class="panel-heading">Mixer</div>
@@ -95,24 +116,22 @@
 		    	<ul id="sortable" class="list-unstyled list-inline">
 		    	</ul>
 	    	</div>
-	    	<a data-toggle="modal" href="#myModal" class="btn-success btn-lg glyphicon glyphicon-play pull-right"></a>
+	    	<a data-toggle="modal" href="#myModal" class="btn-success btn-lg pull-right"><span class=" glyphicon glyphicon-play"></span><!-- Play your remix! --></a>
 		  </div>
 		</div>
       </div>
     </div>
 
     <div class="videos container">
-
-      <!-- Example row of columns -->
       <div class="row">
-        <div class="col-lg-4 picker">
+        <div class="picker">
           
         </div>
       </div>
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p>Code can be found <a href="https://github.com/arc64/wahlflopper">on github</a></p>
       </footer>
     </div> <!-- /container -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
@@ -145,56 +164,65 @@
 
 		var clips = {'items':{
 		  	'zur-tagesordnung': {
+		  	id: 'zur-tagesordnung',
             title: 'zur Tagesordnung übergehen',
-            id: 'gMp2D9rBiSc',
+            yt: 'gMp2D9rBiSc',
             in: 233,
             out: 240
           },
           'bittere-cdu': {
+          	id: 'bittere-cdu',
             title: 'eine bittere Niederlage',
-            id: 'I-3G0ylRriQ',
+            yt: 'I-3G0ylRriQ',
             in: 22,
             out: 29
           },
           'jfk-bin-ein-berliner': {
+          	id: 'jfk-bin-ein-berliner',
             title: 'ich bin ein Berliner',
-            id: 'hH6nQhss4Yc',
+            yt: 'hH6nQhss4Yc',
             in: 21,
             out: 23.5
           },
           'ruckrede': {
+          	id: 'ruckrede',
             title: 'liebgewonnene Besitzstände',
-            id: 'FhHrzWvd-Js',
+            yt: 'FhHrzWvd-Js',
             in: 0,
             out: 2.5
           },
           'herzchen': {
+          	id: 'herzchen',
             title: 'sozialdemokratische Herzen',
-            id: '8FZIlXVhWIk',
+            yt: '8FZIlXVhWIk',
             in: 90.5,
             out: 96.5
           },
           'umfassend': {
+          	id: 'umfassend',
             title: 'eindeutig und umfassend',
-            id: 'wKA7GwTuVJA',
+            yt: 'wKA7GwTuVJA',
             in: 32.5,
             out: 40.5
           },
           'angieschmerz': {
+          	id: 'angieschmerz',
             title: 'schmerzt natürlich sehr',
-            id: 'rR35QbUS1WU',
+            yt: 'rR35QbUS1WU',
             in: 48,
             out: 55
           },
           'mickey': {
+          	id: 'mickey',
             title: 'Knockout! ',
-            id: 'kT_pS_4OO7E',
+            yt: 'kT_pS_4OO7E',
             in: 234,
             out: 240
           },
           'hauptstadtchefin': {
+          	id: 'hauptstadtchefin',
             title: 'als ZDF-Hauptstadtchefin',
-            id: 'ssHU_-wpsMo',
+            yt: 'ssHU_-wpsMo',
             in: 263,
             out: 266.5
           }
@@ -202,17 +230,18 @@
 
 		// some method madness
 		function removeItemFromMixer(id) {
-			inMixer = $.grep(inMixer, function(e){ return e.id != id; });
+			inMixer = $.grep(inMixer, function(e){ return e != id; });
 			$('body').data('videoid', id).removeClass('inMixer');
     	}
 
     	function addItemToMixer(id, index) {
     		inMixer.splice(index, 0, id);
+    		// console.log(inMixer)
     		$('body').data('videoid', id).addClass('inMixer');
     	}
 
     	function getItem(id) {
-    		return $.grep(inMixer, function(e){ return e.id == id; });
+    		return $.grep(inMixer, function(e){ return e == id; });
     	}
 
     	// templates
@@ -224,9 +253,9 @@
 		          
 				'</div>',
 		        '<div class="panel-body">',
-		          '<a href="#" class="thumbnail">',
-				      '<img src="http://img.youtube.com/vi/{{id}}/mqdefault.jpg" alt="{{title}}">',
-				   '</a>',
+		          // '<a href="#" class="thumbnail">',
+				      '<img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" alt="{{title}}">',
+				   // '</a>',
 		        '</div>',
 	      	'</div>',
 	    '</li>{{/items}}'].join('');
@@ -255,14 +284,17 @@
 		'</div><!-- /.modal -->'
     	].join('');
 
-    	var pickerTemplate = '{{#items}}<div class="item col-4 col-sm-4 col-lg-4" data-videoid={{id}}><h3>{{title}}</h3><img src="{{thumb}}" /><a href="#" type="button" class="btn btn-primary add">Add to remix</a></div>{{/items}}';
+    	var pickerTemplate = '{{#each items}}<div class="video col-md-6" data-videoid={{id}}><h3>{{title}}</h3><a href="#" class="play-video col-md-6"><span class="play glyphicon glyphicon-play"></span><img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" class="img-responsive" /></a><a href="#" type="button" class="btn btn-success add"><span class="glyphicon glyphicon-plus"></span></a></div>{{/each}}';
 
 	    function renderMixer(){
 	    	var videos = {};
 	    	videos['items'] = [];
 	    	$.each( inMixer, function(i, value) {
-	    		value['index'] = i+1;
- 				videos['items'].push(clips['items'][value])	
+	    		// todo : more elegant way of doing this
+	    		var tmp = clips['items'][value];
+	    		tmp['index'] = i+1;
+	    		console.log(tmp)
+ 				videos['items'].push(tmp);	
 			});
 			var template = Handlebars.compile(videoTemplate);
 			$('.mixer #sortable').html(template(videos));
@@ -278,6 +310,7 @@
 
 		function renderPicker(){
 			var template = Handlebars.compile(pickerTemplate);
+		
 			$('.picker').append(template(clips));
 		}
 
@@ -288,7 +321,7 @@
 		//renderModal();
 
 		// event heaven
-		// $('.videos').html(videos);
+
 
 		$('.mixer').delegate( ".close", "click", function(e) {
 			vId = $(this).closest('.video').data('videoid');
@@ -299,10 +332,8 @@
 
 		$('.picker').delegate( ".add", "click", function(e) {
 			vId = $(this).closest('.video').data('videoid');
-			console.log(clips['items']);
-			//todo: don't need to do this, just look it up
-			//addItemToMixer(vId, videos['items'][vId], inMixer['items'].length); 
-		 	//renderMixer(); 
+			addItemToMixer(vId, inMixer.length); 
+		 	renderMixer(); 
 
 		 	//updateURI();
 		});
