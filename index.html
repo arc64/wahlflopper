@@ -13,8 +13,36 @@
 
 	<link rel="stylesheet" href="css/style.css" type="text/css"
 	medium="screen" />
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Friedrich Lindenberg" />
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
 
 	<style>
+
+		#skeleton {
+			display: none;
+		}
+
+		.videos {
+			margin: 4em auto;
+			position: relative
+		}
+
+		.layer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: none;
+			width: 500px;
+			height: 400px;
+		}
+
 		.jumbotron h1 {
 			font-size: 38px;
 		}
@@ -24,6 +52,10 @@
   		.row {
   			margin-left: -6px;
   		}
+
+  		.panel-body {
+			padding: 0;
+		}
   	/*	.video {
   			-moz-grab: ;
   		}*/
@@ -87,7 +119,7 @@
 	<!-- todo: boot load videos 
 			drag and drop
 	-->
-	
+	<script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -109,53 +141,78 @@
   
 
   		// data for videos
-    	var inMixer = {
-    	'items':[{
-    	  'id':1,	
-		  'title': "OMG",
-		  'thumb': "path"
-		}, {
-		  'id':2,
-		  'title': "OMG2",
-		  'thumb': "path"
-		}, {
-		  'id':3,
-		  'title': "OMG3",
-		  'thumb': "path"
-		}]};
+    	var inMixer = ['zur-tagesordnung', 'bittere-cdu'];
 
-		var videos = {'items':[{
-    	  'id':1,	
-		  'title': "OMG",
-		  'thumb': "path"
-		}, {
-		  'id':2,
-		  'title': "OMG2",
-		  'thumb': "path"
-		}, {
-		  'id':3,
-		  'title': "OMG3",
-		  'thumb': "path"
-		}, {
-		  'id':4,
-		  'title': "OMG4",
-		  'thumb': "path"
-		}
-		]};
+		var clips = {'items':{
+		  	'zur-tagesordnung': {
+            title: 'zur Tagesordnung übergehen',
+            id: 'gMp2D9rBiSc',
+            in: 233,
+            out: 240
+          },
+          'bittere-cdu': {
+            title: 'eine bittere Niederlage',
+            id: 'I-3G0ylRriQ',
+            in: 22,
+            out: 29
+          },
+          'jfk-bin-ein-berliner': {
+            title: 'ich bin ein Berliner',
+            id: 'hH6nQhss4Yc',
+            in: 21,
+            out: 23.5
+          },
+          'ruckrede': {
+            title: 'liebgewonnene Besitzstände',
+            id: 'FhHrzWvd-Js',
+            in: 0,
+            out: 2.5
+          },
+          'herzchen': {
+            title: 'sozialdemokratische Herzen',
+            id: '8FZIlXVhWIk',
+            in: 90.5,
+            out: 96.5
+          },
+          'umfassend': {
+            title: 'eindeutig und umfassend',
+            id: 'wKA7GwTuVJA',
+            in: 32.5,
+            out: 40.5
+          },
+          'angieschmerz': {
+            title: 'schmerzt natürlich sehr',
+            id: 'rR35QbUS1WU',
+            in: 48,
+            out: 55
+          },
+          'mickey': {
+            title: 'Knockout! ',
+            id: 'kT_pS_4OO7E',
+            in: 234,
+            out: 240
+          },
+          'hauptstadtchefin': {
+            title: 'als ZDF-Hauptstadtchefin',
+            id: 'ssHU_-wpsMo',
+            in: 263,
+            out: 266.5
+          }
+		}};
 
 		// some method madness
 		function removeItemFromMixer(id) {
-			inMixer['items'] = $.grep(inMixer['items'], function(e){ return e.id != id; });
+			inMixer = $.grep(inMixer, function(e){ return e.id != id; });
 			$('body').data('videoid', id).removeClass('inMixer');
     	}
 
-    	function addItemToMixer(id, item, index) {
-    		inMixer['items'].splice(index, 0, item);
+    	function addItemToMixer(id, index) {
+    		inMixer.splice(index, 0, id);
     		$('body').data('videoid', id).addClass('inMixer');
     	}
 
     	function getItem(id) {
-    		return $.grep(inMixer['items'], function(e){ return e.id == id; });
+    		return $.grep(inMixer, function(e){ return e.id == id; });
     	}
 
     	// templates
@@ -163,12 +220,12 @@
 			'<div class="panel panel-default">',
 		        '<div class="panel-heading">',
 		        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',
-		          '<h3 class="panel-title"><h3></h3>',
+		          '<h3 class="panel-title">{{@index}}. {{title}}</h3>',
 		          
 				'</div>',
 		        '<div class="panel-body">',
 		          '<a href="#" class="thumbnail">',
-				      '<img data-src="holder.js/138%x180" alt="...">',
+				      '<img src="http://img.youtube.com/vi/{{id}}/mqdefault.jpg" alt="{{title}}">',
 				   '</a>',
 		        '</div>',
 	      	'</div>',
@@ -184,8 +241,10 @@
 		'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
 		'<h4 class="modal-title">{{title}}</h4>',
 		'</div>',
-		'<div class="modal-body">',
+		'<div id="skeleton" class="modal-body">',
+        '<div class="layer">',
 		'{{embed}}',
+		'</div>',
 		'</div>',
 		'<div class="modal-footer">',
 		'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
@@ -199,7 +258,12 @@
     	var pickerTemplate = '{{#items}}<div class="item col-4 col-sm-4 col-lg-4" data-videoid={{id}}><h3>{{title}}</h3><img src="{{thumb}}" /><a href="#" type="button" class="btn btn-primary add">Add to remix</a></div>{{/items}}';
 
 	    function renderMixer(){
-	    	$('.mixer #sortable').html(Mustache.render(videoTemplate, inMixer));
+	    	var videos = {};
+	    	videos['items'] = [];
+	    	$.each( inMixer, function(i, value) {
+ 				videos['items'].push(clips['items'][value])	
+			});
+			$('.mixer #sortable').html(Mustache.render(videoTemplate, videos));
 	    	return;
 	    }
 
@@ -210,7 +274,7 @@
 	    }
 
 		function renderPicker(){
-			$('.picker').append(Mustache.render(pickerTemplate, videos));
+			$('.picker').append(Mustache.render(pickerTemplate, clips));
 		}
 
 		// getting down to business
@@ -231,7 +295,7 @@
 
 		$('.picker').delegate( ".add", "click", function(e) {
 			vId = $(this).closest('.video').data('videoid');
-			console.log(videos['items']);
+			console.log(clips['items']);
 			//todo: don't need to do this, just look it up
 			//addItemToMixer(vId, videos['items'][vId], inMixer['items'].length); 
 		 	//renderMixer(); 
@@ -261,6 +325,51 @@
   				addItemToMixer(id, item[0], ui.item.index());
 		    }
     	});
+
+
+
+    	// Popcorn playback
+
+    	 
+    	// var skeleton = $('#skeleton').html(),
+     //    $videos = $('.videos');
+     //    $.each(clips, function(k, v) {
+     //      $el = $(skeleton);
+     //      $el.prop('id', k);
+     //      $videos.append($el);
+     //      v.$el = $el;
+     //      v.pc = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
+     //      v.pc.pause();
+     //      v.pc.autoplay(false);
+     //      v.pc.on('loadedmetadata', function() {
+     //        v.pc.currentTime(v.in);
+     //        //
+     //      });
+     //    });
+
+        //var sequence = ['zur-tagesordnung', 'bittere-cdu', 'jfk-bin-ein-berliner'];  'bittere-cdu', 
+        var sequence = ['ruckrede', 'mickey', 'angieschmerz', 'zur-tagesordnung', 'jfk-bin-ein-berliner', 'herzchen', 'hauptstadtchefin'];
+
+        function playback(sequence, doneCallback) {
+          var k = sequence[0],
+              v = clips[k];
+          v.$el.show();
+          //v.pc.currentTime();
+          v.pc.unmute();
+          v.pc.play(v.in);
+          v.pc.cue(v.out, function() {
+            v.pc.pause();
+            v.$el.hide();
+            var rem = sequence.slice(1);
+            if (!rem.length) doneCallback();
+            playback(rem, doneCallback);
+            //console.log(rem);
+          });
+        }
+        
+        //window.seq = sequence;
+        //window.playback = playback;
+        //playback(sequence);
 	});
     </script>
   </body>
