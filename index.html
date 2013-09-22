@@ -115,7 +115,7 @@
         <p>&copy; Company 2013</p>
       </footer>
     </div> <!-- /container -->
-    <script src="./vendor/mustache.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
 	<!-- todo: boot load videos 
 			drag and drop
 	-->
@@ -220,7 +220,7 @@
 			'<div class="panel panel-default">',
 		        '<div class="panel-heading">',
 		        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',
-		          '<h3 class="panel-title">{{@index}}. {{title}}</h3>',
+		          '<h3 class="panel-title">{{index}}. {{title}}</h3>',
 		          
 				'</div>',
 		        '<div class="panel-body">',
@@ -261,20 +261,24 @@
 	    	var videos = {};
 	    	videos['items'] = [];
 	    	$.each( inMixer, function(i, value) {
+	    		value['index'] = i+1;
  				videos['items'].push(clips['items'][value])	
 			});
-			$('.mixer #sortable').html(Mustache.render(videoTemplate, videos));
+			var template = Handlebars.compile(videoTemplate);
+			$('.mixer #sortable').html(template(videos));
 	    	return;
 	    }
 
 	    function renderModel(){
 	    	var video = 0;// todo: popcorn 
-	    	$('.body').append(Mustache.render(modelTemplate, video));
+	    	var template = Handlebars.compile(modelTemplate);
+	    	$('.body').append(template(video));
 	    	return;
 	    }
 
 		function renderPicker(){
-			$('.picker').append(Mustache.render(pickerTemplate, clips));
+			var template = Handlebars.compile(pickerTemplate);
+			$('.picker').append(template(clips));
 		}
 
 		// getting down to business
@@ -316,6 +320,7 @@
 // todo: hash for url
 // todo: remix or share
 // todo: make shit fade in and show user where they are
+// todo: now that you ahve changed to hanlebars change the templates
 		$( "#sortable" ).sortable({
       		placeholder: "video",
   			stop: function(event, ui) {
