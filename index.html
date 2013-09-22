@@ -21,6 +21,9 @@
   		
   		#sortable li { }
   
+  		.row {
+  			margin-left: -6px;
+  		}
   	/*	.video {
   			-moz-grab: ;
   		}*/
@@ -56,32 +59,15 @@
         <div class="panel panel-default">
 		  <div class="panel-heading">Mixer</div>
 		  <div class="panel-body mixer">
-	    	<ul id="sortable" class="list-unstyled list-inline">
-	    	</ul>
+		  	<div class="row">
+		    	<ul id="sortable" class="list-unstyled list-inline">
+		    	</ul>
+	    	</div>
+	    	<a data-toggle="modal" href="#myModal" class="btn-success btn-lg glyphicon glyphicon-play pull-right"></a>
 		  </div>
 		</div>
       </div>
     </div>
-
-    <!-- Modal -->
-
-    <div class="modal fade">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title">Modal title</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p>One fine body&hellip;</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
 
     <div class="videos container">
 
@@ -166,14 +152,40 @@
 	      	'</div>',
 	    '</li>{{/items}}'].join('');
 
+
+	    var modelTemplate = [
+	    '<!-- Modal -->',
+		'<div class="modal fade">',
+		'<div class="modal-dialog">',
+		'<div class="modal-content">',
+		'<div class="modal-header">',
+		'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
+		'<h4 class="modal-title">{{title}}</h4>',
+		'</div>',
+		'<div class="modal-body">',
+		'{{embed}}',
+		'</div>',
+		'<div class="modal-footer">',
+		'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
+		'<button type="button" class="btn btn-primary">Save changes</button>',
+		'</div>',
+		'</div><!-- /.modal-content -->',
+		'</div><!-- /.modal-dialog -->',
+		'</div><!-- /.modal -->'
+    	].join('');
+
 	    function renderMixer(){
 	    	$('.mixer #sortable').html(Mustache.render(videoTemplate, userPicked));
 	    	return;
 	    }
 
-	    
+	    // function renderModel(video){
+	    // 	$('.body').append(Mustache.render(videoTemplate, video);
+	    // 	return;
+	    // }
 
-		var videos = Mustache.render("{{#items}}<div class='draggable item'><h3>{{title}}</h3><img src='{{thumb}}' /></div>{{/items}}", userPicked); // change this to default videos
+		var videos = Mustache.render("{{#items}}<div class='draggable item'><h3>{{title}}</h3><img src='{{thumb}}' /></div>{{/items}}", userPicked); 
+		// change this to default videos
 
 		$('.videos').html(videos);
 
@@ -181,6 +193,12 @@
 			vId = $(this).closest('.video').data('videoid');
 			removeItemFromMixer(vId); 
 		 	renderMixer(); 
+		 	//updateURI();
+		});
+
+		$('.glyphicon-play').click(function(){
+			//var urli = //resolve items;
+			// open modal and play video
 		});
 
 		renderMixer(); 
@@ -189,6 +207,7 @@
 // todo: add items from list
 // todo: create list
 // todo: cursor to grab / plus state indicator
+// todo: hash for url
 		$( "#sortable" ).sortable({
       		placeholder: "video",
   			stop: function(event, ui) {
