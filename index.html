@@ -138,11 +138,6 @@
         </div>
       </div>
       <hr>
-	<div class="vids">
-      <div id="skeleton">
-        <div class="layer"></div>
-      </div>
-    </div>
       <footer>
         <p>Code can be found <a href="https://github.com/arc64/wahlflopper">on github</a></p>
       </footer>
@@ -385,11 +380,12 @@
         	$videos = $('.vids');
         //console.log(skeleton, $videos)
 
-        $.each(clips, function(k, v) {
-
+        $.each(clips['items'], function(k, v) {
+// todo: needs to work off actual mixer
           $el = $(skeleton);
           $el.prop('id', k);
           $videos.append($el);
+
           v.$el = $el;
           v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
           console.log('something',v.$el.show());
@@ -406,7 +402,7 @@
           var v = sequence['items'][k];
               console.log(v)
 
-          v.$el.show();
+          //v.$el.show();
           //v.pc.currentTime();
           v.popcorn.unmute();
           v.popcorn.play(v.in);
