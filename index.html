@@ -3,107 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
     <title>Wahlflopper</title>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">	
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/style.css" type="text/css"
+  	<link rel="stylesheet" href="css/style.css" type="text/css"
 	medium="screen" />
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="author" content="Friedrich Lindenberg" />
-
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-
-
-	<style>
-		/* messy !*/
-		#skeleton {
-			display: none;
-		}
-
-		.videos {
-			margin: 4em auto;
-			position: relative
-		}
-
-		.layer {
-			position: absolute;
-			top: 0;
-			left: 0;
-			display: none;
-			width: 500px;
-			height: 400px;
-		}
-
-		.jumbotron h1 {
-			font-size: 38px;
-		}
-  
-  		.row {
-  			margin-left: -6px;
-  		}
-
-  		.panel-body {
-			padding: 0;
-		}
-
-		li { 
-			cursor: pointer;
-		}
-
-		/* .mixer */
-		.mixer img {
-            width: 110px;
-		}
-  
-  		.video-highlight { 
-  			height: 1.5em; 
-  			line-height: 1.2em; 
-  			border: 1px solid red;
-  			width: 200px;
-  			display: block;
-  			min-height: 250px;
-  		}
-
-  		/* .picker */
-  		.play-video {
-			display: block;
-			overflow: auto;
-			margin: 0;
-			padding: 0;
-  		}
-
-  		.play {
-  			position:absolute;
-		    top:0;
-		    left:0;
-		    right:0;
-		    bottom:0;
-		    background-color: rgba(0, 0, 0, 0.6);
-		    background: url(data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAATSURBVBhXY2RgYNgHxGAAYuwDAA78AjwwRoQYAAAAAElFTkSuQmCC) repeat scroll transparent\9; /* ie fallback png background image */
-		    z-index:9999;
-		    color:white;
-		    line-height: 3em;
-			font-size: 40px;
-		    text-align: center;
-  		}
-
-  		.picker .video {
-  			position: abosolute;
-  		}
-
-  		.picker .add {
-  			margin-left: 10px;
-  		}
-	</style>
   	<!-- Latest compiled and minified JavaScript -->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -118,6 +25,17 @@
       	<div class="page-header">
   			<h1>Wahlflopper <small>Remix your BTW13 election defeat videos here</small></h1>
 		</div>
+		<div class="video-player row">
+			<div class="video-wrapper">
+			<div class="vids">
+				<div id="skeleton" class="modal-body">
+					<div class="layer">
+						<p>some video</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
         <div class="panel panel-default">
 		  <div class="panel-heading">Mixer</div>
 		  <div class="panel-body mixer">
@@ -125,7 +43,9 @@
 		    	<ul id="sortable" class="list-unstyled list-inline">
 		    	</ul>
 	    	</div>
-	    	<a data-toggle="modal" href="#myModal" class="btn-success btn-lg pull-right"><span class=" glyphicon glyphicon-play"></span><!-- Play your remix! --></a>
+	    	<a class="btn-success btn-lg pull-right"><span class="glyphicon glyphicon-play"></span><!-- Play your remix! --></a>
+	    <!-- 	<a class="btn btn-success btn-lg pull-right"><span class="share glyphicon glyphicon-share-alt"></span><!--  Share your remix! </a>-->
+
 		  </div>
 		</div>
       </div>
@@ -269,30 +189,30 @@
 	    '</li>{{/items}}'].join('');
 
 
-	    var modalTemplate = [
-	    '<!-- Modal -->',
-		'<div class="modal fade">',
-		'<div class="modal-dialog">',
-		'<div class="modal-content">',
-			'<div class="modal-header">',
-				'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
-				'<h4 class="modal-title"></h4>',
-			'</div>',
-		'<div class="vids">',
-		'<div id="skeleton" class="modal-body">',
-        '<div class="layer">',
+	 //    var modalTemplate = [
+	 //    '<!-- Modal -->',
+		// '<div class="modal fade">',
+		// '<div class="modal-dialog">',
+		// '<div class="modal-content">',
+		// 	'<div class="modal-header">',
+		// 		'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
+		// 		'<h4 class="modal-title"></h4>',
+		// 	'</div>',
+		// '<div class="vids">',
+		// '<div id="skeleton" class="modal-body">',
+  //       '<div class="layer">',
 		
-		'</div>',
-		'</div>',
-		'</div>',
-		'<div class="modal-footer">',
-		'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
-		'<button type="button" class="btn btn-primary">Save changes</button>',
-		'</div>',
-		'</div><!-- /.modal-content -->',
-		'</div><!-- /.modal-dialog -->',
-		'</div><!-- /.modal -->'
-    	].join('');
+		// '</div>',
+		// '</div>',
+		// '</div>',
+		// '<div class="modal-footer">',
+		// '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
+		// '<button type="button" class="btn btn-primary">Save changes</button>',
+		// '</div>',
+		// '</div><!-- /.modal-content -->',
+		// '</div><!-- /.modal-dialog -->',
+		// '</div><!-- /.modal -->'
+  //   	].join('');
 
     	var pickerTemplate = '{{#each items}}<div class="video col-md-6" data-videoid={{id}}><h3>{{title}}</h3><a href="#" class="play-video col-md-6"><span class="play glyphicon glyphicon-play"></span><img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" class="img-responsive" /></a><a href="#" type="button" class="btn btn-success add"><span class="glyphicon glyphicon-plus"></span></a></div>{{/each}}';
 
@@ -361,6 +281,8 @@
 // todo: now that you ahve changed to hanlebars change the templates
 // todo: fix sortable style - it is hard to see 
 // todo: boot load videos in picker
+// todo: fix bug where removing one rwmoves
+// todo:licence
 
 		// Sort the items in the picker
 		$( "#sortable" ).sortable({
@@ -376,38 +298,40 @@
     	$( "#sortable" ).disableSelection();
 
     	// Popcorn playback
-    	var skeleton = $('#skeleton').html(),
-        	$videos = $('.vids');
-        //console.log(skeleton, $videos)
+    	var skeleton = $('#skeleton').html();
+        var $videos = $('.vids');
 
         $.each(clips['items'], function(k, v) {
 // todo: needs to work off actual mixer
-          $el = $(skeleton);
-          $el.prop('id', k);
-          $videos.append($el);
+			$el = $(skeleton);
+			$el.prop('id', k);
+			$videos.append($el);
+			v.$el = $el;
+			//console.log($videos, v.$el)
+			// popcorn for every video
+			v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
+		 //console.log('something',v.$el.show());
+			v.popcorn.pause();
+			v.popcorn.autoplay(false);
+			v.popcorn.on('loadedmetadata', function() {
+			  v.popcorn.currentTime(v.in);
 
-          v.$el = $el;
-          v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
-          console.log('something',v.$el.show());
-          v.popcorn.pause();
-          v.popcorn.autoplay(false);
-          v.popcorn.on('loadedmetadata', function() {
-            v.popcorn.currentTime(v.in);
-            
-          });
+			});
+			//console.log(v, $el)
         });
 
         function playback(sequence, doneCallback) {
-          var k = inMixer[0];
-          var v = sequence['items'][k];
-              console.log(v)
+			var k = inMixer[0];
+			var v = sequence['items'][k];
+			//   console.log(v)
 
-          //v.$el.show();
-          //v.pc.currentTime();
-          v.popcorn.unmute();
-          v.popcorn.play(v.in);
 
-          	v.popcorn.cue(v.out, function() {
+			v.$el.show();
+			// //v.pc.currentTime();
+			//v.popcorn.unmute();
+			v.popcorn.play(v.in);
+
+	      	v.popcorn.cue(v.out, function() {
 	            
 	            v.popcorn.pause();
 	            v.$el.hide();
@@ -417,13 +341,13 @@
 
 	            	playback(rem, doneCallback);
 	            	//console.log(rem);
-	          	});
-        	}
+	        });
+	  }
         
-	        window.seq = clips;
-	        window.playback = playback;
-	        playback(clips);
-		});
+        // window.seq = clips;
+        // window.playback = playback;
+        // playback(clips);
+	});
 
     </script>
   </body>
