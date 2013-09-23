@@ -28,9 +28,8 @@
 		<div class="video-player row">
 			<div class="video-wrapper">
 			<div class="vids">
-				<div id="skeleton" class="modal-body">
+				<div id="skeleton">
 					<div class="layer">
-						<p>some video</p>
 					</div>
 				</div>
 			</div>
@@ -43,7 +42,7 @@
 		    	<ul id="sortable" class="list-unstyled list-inline">
 		    	</ul>
 	    	</div>
-	    	<a class="btn-success btn-lg pull-right"><span class="glyphicon glyphicon-play"></span><!-- Play your remix! --></a>
+	    	<a class="btn-success btn-lg pull-right"><span class="glyphicon glyphicon-play play-video"></span><!-- Play your remix! --></a>
 	    <!-- 	<a class="btn btn-success btn-lg pull-right"><span class="share glyphicon glyphicon-share-alt"></span><!--  Share your remix! </a>-->
 
 		  </div>
@@ -267,11 +266,9 @@
 		 	//updateURI();
 		});
 
-		// $('.glyphicon-play').click(function(){
-		// 	//var urli = //resolve items;
-		// 	// open modal and play video
-
-		// });
+		$('.play-video').click(function(){
+			playback();
+		});
 
 // todo: smallify for mobile
 // todo: cursor to grab / plus state indicator
@@ -283,6 +280,7 @@
 // todo: boot load videos in picker
 // todo: fix bug where removing one rwmoves
 // todo:licence
+// todo: tracking
 
 		// Sort the items in the picker
 		$( "#sortable" ).sortable({
@@ -297,32 +295,36 @@
 
     	$( "#sortable" ).disableSelection();
 
-    	// Popcorn playback
-    	var skeleton = $('#skeleton').html();
-        var $videos = $('.vids');
 
-        $.each(clips['items'], function(k, v) {
-// todo: needs to work off actual mixer
-			$el = $(skeleton);
-			$el.prop('id', k);
-			$videos.append($el);
-			v.$el = $el;
-			//console.log($videos, v.$el)
-			// popcorn for every video
-			v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
-		 //console.log('something',v.$el.show());
-			v.popcorn.pause();
-			v.popcorn.autoplay(false);
-			v.popcorn.on('loadedmetadata', function() {
-			  v.popcorn.currentTime(v.in);
+    	function placeClips() {
+	    		// Popcorn playback
+	    	var skeleton = $('#skeleton').html();
+	        var $videos = $('.vids');
 
-			});
-			//console.log(v, $el)
-        });
+	        $.each(clips['items'], function(k, v) {
+	// todo: needs to work off actual mixer
+				$el = $(skeleton);
+				$el.prop('id', k);
+				$videos.append($el);
+				v.$el = $el;
+				//console.log($videos, v.$el)
+				// popcorn for every video
+				v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
+			 //console.log('something',v.$el.show());
+				v.popcorn.pause();
+				v.popcorn.autoplay(false);
+				v.popcorn.on('loadedmetadata', function() {
+				  v.popcorn.currentTime(v.in);
+
+				});
+				//console.log(v, $el)
+	        });
+    	}
+    	
 
         function playback(sequence, doneCallback) {
 			var k = inMixer[0];
-			var v = sequence['items'][k];
+			var v = clips['items'][k];
 			//   console.log(v)
 
 
@@ -335,7 +337,7 @@
 	            
 	            v.popcorn.pause();
 	            v.$el.hide();
-	            var rem = sequence.slice(1);
+	            var rem = inMixer.slice(1);
 
 	            if (!rem.length) doneCallback();
 
@@ -344,9 +346,11 @@
 	        });
 	  }
         
-        // window.seq = clips;
+      placeClips();
+
+        // window.seq = inMixer;
         // window.playback = playback;
-        // playback(clips);
+        playback(clips);
 	});
 
     </script>
