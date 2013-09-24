@@ -2,7 +2,7 @@ require.config(
     paths:
         popcorn: "../bower_components/popcornjs"
         jquery: "../bower_components/jquery/jquery"
-        jqueryui: "../bower_components/jquery/jquery-ui"
+        jqueryui: "../bower_components/jquery-ui/ui/minified/jquery-ui.min"
         handlebars: "../bower_components/handlebars/handlebars"
         moment: "../bower_components/momentjs/moment"
         momentlangde: "vendor/moments-lang-de"
