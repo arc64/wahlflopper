@@ -68,7 +68,7 @@ ul#sortable {
 }
 
 /* .picker */
-.play-video {
+.video-player {
     display: block;
     overflow: auto;
     margin: 0;

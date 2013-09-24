@@ -18,6 +18,12 @@ develop-eggs
 lib
 lib64
 
+.DS_Store
+.tmp/
+node_modules/
+.sass-cache/
+app/bower_components/
+
 # Installer logs
 pip-log.txt
 

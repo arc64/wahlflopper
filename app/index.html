@@ -35,14 +35,14 @@
 			</div>
 		</div>
 		</div>
-        <div class="panel panel-default">
+        <div id="mixer" class="panel panel-default">
 		  <div class="panel-heading">Mixer</div>
 		  <div class="panel-body mixer">
 		  	<div class="row">
 		    	<ul id="sortable" class="list-unstyled list-inline">
 		    	</ul>
 	    	</div>
-	    	<a class="btn-success btn-lg pull-right"><span class="glyphicon glyphicon-play play-video"></span><!-- Play your remix! --></a>
+	    	<a class="btn-success btn-lg pull-right"><span class="glyphicon glyphicon-play play-btn"></span><!-- Play your remix! --></a>
 	    <!-- 	<a class="btn btn-success btn-lg pull-right"><span class="share glyphicon glyphicon-share-alt"></span><!--  Share your remix! </a>-->
 
 		  </div>
@@ -71,23 +71,54 @@
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	
+	<!-- History.js -->
+	<script src="//browserstate.github.io/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
 
     <script>
     $(function() {
+    	// History State
+	    History.Adapter.bind(window,'statechange',function(){ 
+	        var State = History.getState(); 
+	    });
 
-    // some hairy user interaction
-	    // $( ".draggable" ).draggable();
-	    // $( "#droppable" ).droppable({
-	    //   drop: function( event, ui ) {
-	    //     $( this )
-	    //       .addClass( "panel-success" );
-	    //   }
-	    // });
-  
-  
+	   	var oGetVars = [];
 
+	   	function buildValue(sValue) {
+			if (/^\s*$/.test(sValue)) { return null; }
+			if (/^(true|false)$/i.test(sValue)) { return sValue.toLowerCase() === "true"; }
+			if (isFinite(sValue)) { return parseFloat(sValue); }
+			if (isFinite(Date.parse(sValue))) { return new Date(sValue); }
+			return sValue;
+		}
+
+		if (window.location.search.length > 1) {
+		  for (var aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
+		    aItKey = aCouples[nKeyId].split("=");
+		    
+		    nKeyId
+		    oGetVars.push[buildValue(unescape(aItKey[1]))]
+		    oGetVars[unescape(aItKey[0])] = aItKey.length > 1 ? buildValue(unescape(aItKey[1])) : null;
+		  }
+		}
+
+console.log(oGetVars);
   		// data for videos
-    	var inMixer = ['zur-tagesordnung', 'bittere-cdu'];
+    	var defaultMixer = ['zur-tagesordnung', 'bittere-cdu'];
+
+    	var inMixer = [];
+
+    	var uriParams = location.search;
+    	// var newParam = $.extend({}, inMixer);
+    	// History.pushState(newParam, "wahlflopper", $.param(newParam));
+	    
+    	console.log('location', uriParams);
+    	if(uriParams) {
+    		console.log('location', uriParams);
+    		//iMixer = params
+    	} else {
+    	 	inMixer = defaultMixer;
+    	}
 
 		var clips = {'items':{
 		  	'zur-tagesordnung': {
@@ -187,39 +218,13 @@
 	      	'</div>',
 	    '</li>{{/items}}'].join('');
 
-
-	 //    var modalTemplate = [
-	 //    '<!-- Modal -->',
-		// '<div class="modal fade">',
-		// '<div class="modal-dialog">',
-		// '<div class="modal-content">',
-		// 	'<div class="modal-header">',
-		// 		'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
-		// 		'<h4 class="modal-title"></h4>',
-		// 	'</div>',
-		// '<div class="vids">',
-		// '<div id="skeleton" class="modal-body">',
-  //       '<div class="layer">',
-		
-		// '</div>',
-		// '</div>',
-		// '</div>',
-		// '<div class="modal-footer">',
-		// '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
-		// '<button type="button" class="btn btn-primary">Save changes</button>',
-		// '</div>',
-		// '</div><!-- /.modal-content -->',
-		// '</div><!-- /.modal-dialog -->',
-		// '</div><!-- /.modal -->'
-  //   	].join('');
-
-    	var pickerTemplate = '{{#each items}}<div class="video col-md-6" data-videoid={{id}}><h3>{{title}}</h3><a href="#" class="play-video col-md-6"><span class="play glyphicon glyphicon-play"></span><img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" class="img-responsive" /></a><a href="#" type="button" class="btn btn-success add"><span class="glyphicon glyphicon-plus"></span></a></div>{{/each}}';
+    	var pickerTemplate = '{{#each items}}<div class="video col-md-6" data-videoid={{id}}><h3>{{title}}</h3><a href="#" class="video-player col-md-6"><span class="play glyphicon glyphicon-play"></span><img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" class="img-responsive" /></a><a href="#mixer" type="button" class="btn btn-success add"><span class="glyphicon glyphicon-plus"></span></a></div>{{/each}}';
 
 	    function renderMixer(){
 	    	var videos = {};
 	    	videos['items'] = [];
 	    	$.each( inMixer, function(i, value) {
-	    		// todo : more elegant way of doing this
+	
 	    		var tmp = clips['items'][value];
 	    		tmp['index'] = i+1;
 	    		//console.log(tmp)
@@ -249,8 +254,6 @@
 		//renderModal();
 
 		// event heaven
-
-
 		$('.mixer').delegate( ".close", "click", function(e) {
 			vId = $(this).closest('.video').data('videoid');
 			removeItemFromMixer(vId); 
@@ -266,21 +269,10 @@
 		 	//updateURI();
 		});
 
-		$('.play-video').click(function(){
-			playback();
+		$('.play-btn').click(function(){
+			console.log('play');
+			playback(inMixer, function(){console.log('we are done')});
 		});
-
-// todo: smallify for mobile
-// todo: cursor to grab / plus state indicator
-// todo: hash for url
-// todo: remix or share
-// todo: make shit fade in and show user where they are
-// todo: now that you ahve changed to hanlebars change the templates
-// todo: fix sortable style - it is hard to see 
-// todo: boot load videos in picker
-// todo: fix bug where removing one rwmoves
-// todo:licence
-// todo: tracking
 
 		// Sort the items in the picker
 		$( "#sortable" ).sortable({
@@ -291,7 +283,9 @@
   			stop: function(event, ui) {
   				var id = ui.item.data('videoid');
   				var item = getItem(id);
+  				console.log('remove', id)
   				removeItemFromMixer(id);
+  				console.log('add', id, item[0], ui.item.index())
   				addItemToMixer(id, item[0], ui.item.index());
 			},
 			start: function (e, ui) {
@@ -301,14 +295,14 @@
 
     	$( "#sortable" ).disableSelection();
 
-
-    	function placeClips() {
+    	// function placeClips() {
 	    		// Popcorn playback
 	    	var skeleton = $('#skeleton').html();
 	        var $videos = $('.vids');
 
 	        $.each(clips['items'], function(k, v) {
 	// todo: needs to work off actual mixer
+
 				$el = $(skeleton);
 				$el.prop('id', k);
 				$videos.append($el);
@@ -325,14 +319,13 @@
 				});
 				//console.log(v, $el)
 	        });
-    	}
+    	// }
     	
 
         function playback(sequence, doneCallback) {
-			var k = inMixer[0];
-			var v = clips['items'][k];
-			//   console.log(v)
-
+        	console.log(sequence)
+        	var next = sequence[0];
+			var v = clips['items'][next];
 
 			v.$el.show();
 			// //v.pc.currentTime();
@@ -340,23 +333,19 @@
 			v.popcorn.play(v.in);
 
 	      	v.popcorn.cue(v.out, function() {
-	            
 	            v.popcorn.pause();
 	            v.$el.hide();
-	            var rem = inMixer.slice(1);
-
+	            var rem = sequence.slice(1);
+	            console.log(rem.length, sequence)
 	            if (!rem.length) doneCallback();
-
-	            	playback(rem, doneCallback);
-	            	//console.log(rem);
+	            playback(rem, doneCallback);
 	        });
-	  }
+	  	}
         
-      placeClips();
+    	// /placeClips();
 
-        // window.seq = inMixer;
-        // window.playback = playback;
-        playback(clips);
+        window.playback = playback;
+      
 	});
 
     </script>
