@@ -20,5 +20,5 @@ require.config(
 require(["App"], (App) ->
     "use strict"
 
-    app = new App("Howdy")
+    app = new App("Wahlflopper")
 )

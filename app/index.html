@@ -1,353 +1,405 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+<!doctype html>
+<!--[if lt IE 7]>      <html lang="de" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="de" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="de" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="de" class="no-js"> <!--<![endif]-->
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wahlflopper</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>grunt-template</title>
+    <meta name="viewport" content="width=device-width">
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/data/someData.json"></script>
+    <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
+    <!-- endbuild --> 
 
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">	
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
-  	<link rel="stylesheet" href="css/style.css" type="text/css"
-	medium="screen" />
+    <!-- tmp -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+</head>
+<body>
+    <script id="sample-template" type="text/x-handlebars-template">
+    <p>
+    This is a JavaScript handlebars template and there are {{someNumber}} items in the test data.
+    </p>
+    </script>
+    <!--
+    <!-- @if NODE_ENV='development' -->
+    <p>This is the dev version!</p>
+    <!-- @endif -->
+    <!-- @if NODE_ENV='production' -->
+    <p>This is the production version!</p>
+    <!-- @endif -->
 
-  	<!-- Latest compiled and minified JavaScript -->
+    <p>Hi there!</p>
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
+    <img src="images/sample_image.jpg">
+    -->
     <div class="jumbotron">
-      <div class="container">
-      	<div class="page-header">
-  			<h1>Wahlflopper <small>Remix your BTW13 election defeat videos here</small></h1>
-		</div>
-		<div class="video-player row">
-			<div class="video-wrapper">
-			<div class="vids">
-				<div id="skeleton">
-					<div class="layer">
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-        <div id="mixer" class="panel panel-default">
-		  <div class="panel-heading">Mixer</div>
-		  <div class="panel-body mixer">
-		  	<div class="row">
-		    	<ul id="sortable" class="list-unstyled list-inline">
-		    	</ul>
-	    	</div>
-	    	<a class="btn-success btn-lg pull-right"><span class="glyphicon glyphicon-play play-btn"></span><!-- Play your remix! --></a>
-	    <!-- 	<a class="btn btn-success btn-lg pull-right"><span class="share glyphicon glyphicon-share-alt"></span><!--  Share your remix! </a>-->
-
-		  </div>
-		</div>
-      </div>
+        <div class="container">
+            <div class="page-header">
+                <h1>
+                    Wahlflopper
+                    <small>Remix your BTW13 election defeat videos here</small>
+                </h1>
+            </div>
+            <div class="video-player row">
+                <div class="video-wrapper">
+                    <div class="vids">
+                        <div id="skeleton">
+                            <div class="layer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mixer" class="panel panel-default">
+                <div class="panel-heading">Mixer</div>
+                <div class="panel-body mixer">
+                    <div class="row">
+                        <ul id="sortable" class="list-unstyled list-inline"></ul>
+                    </div>
+                    <a class="btn-success btn-lg pull-right">
+                        <span class="glyphicon glyphicon-play play-btn"></span>
+                        <!-- Play your remix! --> </a>
+                    <!--    <a class="btn btn-success btn-lg pull-right">
+                    <span class="share glyphicon glyphicon-share-alt"></span>
+                    <!--  Share your remix! </a>--></div>
+            </div>
+        </div>
     </div>
 
     <div class="videos container">
-      <div class="row">
-        <div class="picker">
-          
+        <div class="row">
+            <div class="picker"></div>
         </div>
-      </div>
-      <hr>
-      <footer>
-        <p>Code can be found <a href="https://github.com/arc64/wahlflopper">on github</a></p>
-      </footer>
-    </div> <!-- /container -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
-	<!-- todo: boot load videos 
-			drag and drop
-	-->
-	<script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-	
-	<!-- History.js -->
-	<script src="//browserstate.github.io/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
+    </div>
+    <hr>
+    <footer>
+        <p>
+            Code can be found
+            <a href="https://github.com/arc64/wahlflopper">on github</a>
+        </p>
+    </footer>
 
-    <script>
-    $(function() {
-    	// History State
-	    History.Adapter.bind(window,'statechange',function(){ 
-	        var State = History.getState(); 
-	    });
 
-	   	var oGetVars = [];
+<script>
+$(function() {
+        // History State
+        History.Adapter.bind(window,'statechange',function(){
+            var State = History.getState();
+        });
 
-	   	function buildValue(sValue) {
-			if (/^\s*$/.test(sValue)) { return null; }
-			if (/^(true|false)$/i.test(sValue)) { return sValue.toLowerCase() === "true"; }
-			if (isFinite(sValue)) { return parseFloat(sValue); }
-			if (isFinite(Date.parse(sValue))) { return new Date(sValue); }
-			return sValue;
-		}
+        var oGetVars = [];
 
-		if (window.location.search.length > 1) {
-		  for (var aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
-		    aItKey = aCouples[nKeyId].split("=");
-		    
-		    nKeyId
-		    oGetVars.push[buildValue(unescape(aItKey[1]))]
-		    oGetVars[unescape(aItKey[0])] = aItKey.length > 1 ? buildValue(unescape(aItKey[1])) : null;
-		  }
-		}
+        function buildValue(sValue) {
+            if (/^\s*$/.test(sValue)) { return null; }
+            if (/^(true|false)$/i.test(sValue)) { return sValue.toLowerCase() === "true"; }
+            if (isFinite(sValue)) { return parseFloat(sValue); }
+            if (isFinite(Date.parse(sValue))) { return new Date(sValue); }
+            return sValue;
+        }
 
-console.log(oGetVars);
-  		// data for videos
-    	var defaultMixer = ['zur-tagesordnung', 'bittere-cdu'];
+        if (window.location.search.length > 1) {
+          for (var aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId
+< aCouples.length; nKeyId++) {
+            aItKey = aCouples[nKeyId].split("=");
 
-    	var inMixer = [];
+            nKeyId
+            oGetVars.push[buildValue(unescape(aItKey[1]))]
+            oGetVars[unescape(aItKey[0])] = aItKey.length >
+    1 ? buildValue(unescape(aItKey[1])) : null;
+        }
+    }
 
-    	var uriParams = location.search;
-    	// var newParam = $.extend({}, inMixer);
-    	// History.pushState(newParam, "wahlflopper", $.param(newParam));
-	    
-    	console.log('location', uriParams);
-    	if(uriParams) {
-    		console.log('location', uriParams);
-    		//iMixer = params
-    	} else {
-    	 	inMixer = defaultMixer;
-    	}
+    console.log(oGetVars);
+        // data for videos
+        var defaultMixer = ['zur-tagesordnung', 'bittere-cdu'];
 
-		var clips = {'items':{
-		  	'zur-tagesordnung': {
-		  	id: 'zur-tagesordnung',
-            title: 'zur Tagesordnung übergehen',
-            yt: 'gMp2D9rBiSc',
-            in: 233,
-            out: 240
-          },
-          'bittere-cdu': {
-          	id: 'bittere-cdu',
-            title: 'eine bittere Niederlage',
-            yt: 'I-3G0ylRriQ',
-            in: 22,
-            out: 29
-          },
-          'jfk-bin-ein-berliner': {
-          	id: 'jfk-bin-ein-berliner',
-            title: 'ich bin ein Berliner',
-            yt: 'hH6nQhss4Yc',
-            in: 21,
-            out: 23.5
-          },
-          'ruckrede': {
-          	id: 'ruckrede',
-            title: 'liebgewonnene Besitzstände',
-            yt: 'FhHrzWvd-Js',
-            in: 0,
-            out: 2.5
-          },
-          'herzchen': {
-          	id: 'herzchen',
-            title: 'sozialdemokratische Herzen',
-            yt: '8FZIlXVhWIk',
-            in: 90.5,
-            out: 96.5
-          },
-          'umfassend': {
-          	id: 'umfassend',
-            title: 'eindeutig und umfassend',
-            yt: 'wKA7GwTuVJA',
-            in: 32.5,
-            out: 40.5
-          },
-          'angieschmerz': {
-          	id: 'angieschmerz',
-            title: 'schmerzt natürlich sehr',
-            yt: 'rR35QbUS1WU',
-            in: 48,
-            out: 55
-          },
-          'mickey': {
-          	id: 'mickey',
-            title: 'Knockout! ',
-            yt: 'kT_pS_4OO7E',
-            in: 234,
-            out: 240
-          },
-          'hauptstadtchefin': {
-          	id: 'hauptstadtchefin',
-            title: 'als ZDF-Hauptstadtchefin',
-            yt: 'ssHU_-wpsMo',
-            in: 263,
-            out: 266.5
-          }
-		}};
+        var inMixer = [];
 
-		// some method madness
-		function removeItemFromMixer(id) {
-			inMixer = $.grep(inMixer, function(e){ return e != id; });
-			$('body').data('videoid', id).removeClass('inMixer');
-    	}
+        var uriParams = location.search;
+        // var newParam = $.extend({}, inMixer);
+        // History.pushState(newParam, "wahlflopper", $.param(newParam));
 
-    	function addItemToMixer(id, index) {
-    		inMixer.splice(index, 0, id);
-    		// console.log(inMixer)
-    		$('body').data('videoid', id).addClass('inMixer');
-    	}
+        console.log('location', uriParams);
+        if(uriParams) {
+            console.log('location', uriParams);
+            //iMixer = params
+        } else {
+            inMixer = defaultMixer;
+        }
 
-    	function getItem(id) {
-    		return $.grep(inMixer, function(e){ return e == id; });
-    	}
+        var clips = {'items':{
+            'zur-tagesordnung': {
+                id: 'zur-tagesordnung',
+                title: 'zur Tagesordnung übergehen',
+                yt: 'gMp2D9rBiSc',
+                in: 233,
+                out: 240
+            },
+            'bittere-cdu': {
+                id: 'bittere-cdu',
+                title: 'eine bittere Niederlage',
+                yt: 'I-3G0ylRriQ',
+                in: 22,
+                out: 29
+            },
+            'jfk-bin-ein-berliner': {
+                id: 'jfk-bin-ein-berliner',
+                title: 'ich bin ein Berliner',
+                yt: 'hH6nQhss4Yc',
+                in: 21,
+                out: 23.5
+            },
+            'ruckrede': {
+                id: 'ruckrede',
+                title: 'liebgewonnene Besitzstände',
+                yt: 'FhHrzWvd-Js',
+                in: 0,
+                out: 2.5
+            },
+            'herzchen': {
+                id: 'herzchen',
+                title: 'sozialdemokratische Herzen',
+                yt: '8FZIlXVhWIk',
+                in: 90.5,
+                out: 96.5
+            },
+            'umfassend': {
+                id: 'umfassend',
+                title: 'eindeutig und umfassend',
+                yt: 'wKA7GwTuVJA',
+                in: 32.5,
+                out: 40.5
+            },
+            'angieschmerz': {
+                id: 'angieschmerz',
+                title: 'schmerzt natürlich sehr',
+                yt: 'rR35QbUS1WU',
+                in: 48,
+                out: 55
+            },
+            'mickey': {
+                id: 'mickey',
+                title: 'Knockout! ',
+                yt: 'kT_pS_4OO7E',
+                in: 234,
+                out: 240
+            },
+            'hauptstadtchefin': {
+                id: 'hauptstadtchefin',
+                title: 'als ZDF-Hauptstadtchefin',
+                yt: 'ssHU_-wpsMo',
+                in: 263,
+                out: 266.5
+            }
+        }};
 
-    	// templates
-		var videoTemplate = ['{{#items}}<li data-videoid="{{id}}" class="video col-2 col-sm-2 col-lg-2">',
-			'<div class="panel panel-default">',
-		        '<div class="panel-heading">',
-		        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',
-		          '<h3 class="panel-title">{{index}}. {{title}}</h3>',
-		          
-				'</div>',
-		        '<div class="panel-body">',
-		          // '<a href="#" class="thumbnail">',
-				      '<img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" alt="{{title}}">',
-				   // '</a>',
-		        '</div>',
-	      	'</div>',
-	    '</li>{{/items}}'].join('');
+        // some method madness
+        function removeItemFromMixer(id) {
+            inMixer = $.grep(inMixer, function(e){ return e != id; });
+            $('body').data('videoid', id).removeClass('inMixer');
+        }
 
-    	var pickerTemplate = '{{#each items}}<div class="video col-md-6" data-videoid={{id}}><h3>{{title}}</h3><a href="#" class="video-player col-md-6"><span class="play glyphicon glyphicon-play"></span><img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" class="img-responsive" /></a><a href="#mixer" type="button" class="btn btn-success add"><span class="glyphicon glyphicon-plus"></span></a></div>{{/each}}';
+        function addItemToMixer(id, index) {
+            inMixer.splice(index, 0, id);
+            // console.log(inMixer)
+            $('body').data('videoid', id).addClass('inMixer');
+        }
 
-	    function renderMixer(){
-	    	var videos = {};
-	    	videos['items'] = [];
-	    	$.each( inMixer, function(i, value) {
-	
-	    		var tmp = clips['items'][value];
-	    		tmp['index'] = i+1;
-	    		//console.log(tmp)
- 				videos['items'].push(tmp);	
-			});
-			var template = Handlebars.compile(videoTemplate);
-			$('.mixer #sortable').html(template(videos));
-	    	return;
-	    }
+        function getItem(id) {
+            return $.grep(inMixer, function(e){ return e == id; });
+        }
 
-	    function renderModal(){ 
-	    	var template = Handlebars.compile(modalTemplate);
-	    	$('body').append(template({})); // todo: put in real videos
-	    	return;
-	    }
+        // templates
+        var videoTemplate = ['{{#items}}
+    <li data-videoid="{{id}}" class="video col-2 col-sm-2 col-lg-2">
+        ',
+        '
+        <div class="panel panel-default">
+            ',
+        '
+            <div class="panel-heading">
+                ',
+        '
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                ',
+        '
+                <h3 class="panel-title">{{index}}. {{title}}</h3>
+                ',
 
-		function renderPicker(){
-			var template = Handlebars.compile(pickerTemplate);
-		
-			$('.picker').append(template(clips));
-		}
+        '
+            </div>
+            ',
+        '
+            <div class="panel-body">
+                ',
+                  // '
+                <a href="#" class="thumbnail">
+                    ',
+                  '
+                    <img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" alt="{{title}}">
+                    ',
+                   // '
+                </a>
+                ',
+                   '
+            </div>
+            ',
+                   '
+        </div>
+        ',
+                   '
+    </li>
+    {{/items}}'].join('');
 
-		// getting down to business
-		// render some stuff
-		renderMixer(); 
-		renderPicker();
-		//renderModal();
+                   var pickerTemplate = '{{#each items}}
+    <div class="video col-md-6" data-videoid={{id}}>
+        <h3>{{title}}</h3>
+        <a href="#" class="video-player col-md-6">
+            <span class="play glyphicon glyphicon-play"></span>
+            <img src="http://img.youtube.com/vi/{{yt}}/mqdefault.jpg" class="img-responsive" />
+        </a>
+        <a href="#mixer" type="button" class="btn btn-success add">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+    </div>
+    {{/each}}';
 
-		// event heaven
-		$('.mixer').delegate( ".close", "click", function(e) {
-			vId = $(this).closest('.video').data('videoid');
-			removeItemFromMixer(vId); 
-		 	renderMixer(); 
-		 	//updateURI();
-		});
+                   function renderMixer(){
+                    var videos = {};
+                    videos['items'] = [];
+                    $.each( inMixer, function(i, value) {
 
-		$('.picker').delegate( ".add", "click", function(e) {
-			vId = $(this).closest('.video').data('videoid');
-			addItemToMixer(vId, inMixer.length); 
-		 	renderMixer(); 
+                        var tmp = clips['items'][value];
+                        tmp['index'] = i+1;
+                //console.log(tmp)
+                videos['items'].push(tmp);
+            });
+                    var template = Handlebars.compile(videoTemplate);
+                    $('.mixer #sortable').html(template(videos));
+                    return;
+                }
 
-		 	//updateURI();
-		});
+                function renderModal(){
+                    var template = Handlebars.compile(modalTemplate);
+            $('body').append(template({})); // todo: put in real videos
+            return;
+        }
 
-		$('.play-btn').click(function(){
-			console.log('play');
-			playback(inMixer, function(){console.log('we are done')});
-		});
+        function renderPicker(){
+            var template = Handlebars.compile(pickerTemplate);
 
-		// Sort the items in the picker
-		$( "#sortable" ).sortable({
-			placeholder: "video videoPlaceholder col-2 col-sm-2 col-lg-2 panel panel-default",
-			revert: true,
-			forcePlaceholderSize: true,
-			axis: "x",
-  			stop: function(event, ui) {
-  				var id = ui.item.data('videoid');
-  				var item = getItem(id);
-  				console.log('remove', id)
-  				removeItemFromMixer(id);
-  				console.log('add', id, item[0], ui.item.index())
-  				addItemToMixer(id, item[0], ui.item.index());
-			},
-			start: function (e, ui) {
-				$(ui.placeholder).css("height", $(ui.item.children()).height()+"px")
-			}
-    	});
+            $('.picker').append(template(clips));
+        }
 
-    	$( "#sortable" ).disableSelection();
+        // getting down to business
+        // render some stuff
+        renderMixer();
+        renderPicker();
+        //renderModal();
 
-    	// function placeClips() {
-	    		// Popcorn playback
-	    	var skeleton = $('#skeleton').html();
-	        var $videos = $('.vids');
+        // event heaven
+        $('.mixer').delegate( ".close", "click", function(e) {
+            vId = $(this).closest('.video').data('videoid');
+            removeItemFromMixer(vId);
+            renderMixer();
+            //updateURI();
+        });
 
-	        $.each(clips['items'], function(k, v) {
-	// todo: needs to work off actual mixer
+        $('.picker').delegate( ".add", "click", function(e) {
+            vId = $(this).closest('.video').data('videoid');
+            addItemToMixer(vId, inMixer.length);
+            renderMixer();
 
-				$el = $(skeleton);
-				$el.prop('id', k);
-				$videos.append($el);
-				v.$el = $el;
-				//console.log($videos, v.$el)
-				// popcorn for every video
-				v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
-			 //console.log('something',v.$el.show());
-				v.popcorn.pause();
-				v.popcorn.autoplay(false);
-				v.popcorn.on('loadedmetadata', function() {
-				  v.popcorn.currentTime(v.in);
+            //updateURI();
+        });
 
-				});
-				//console.log(v, $el)
-	        });
-    	// }
-    	
+        $('.play-btn').click(function(){
+            console.log('play');
+            playback(inMixer, function(){console.log('we are done')});
+        });
+
+        // Sort the items in the picker
+        $( "#sortable" ).sortable({
+            placeholder: "video videoPlaceholder col-2 col-sm-2 col-lg-2 panel panel-default",
+            revert: true,
+            forcePlaceholderSize: true,
+            axis: "x",
+            stop: function(event, ui) {
+                var id = ui.item.data('videoid');
+                var item = getItem(id);
+                console.log('remove', id)
+                removeItemFromMixer(id);
+                console.log('add', id, item[0], ui.item.index())
+                addItemToMixer(id, item[0], ui.item.index());
+            },
+            start: function (e, ui) {
+                $(ui.placeholder).css("height", $(ui.item.children()).height()+"px")
+            }
+        });
+
+        $( "#sortable" ).disableSelection();
+
+        // function placeClips() {
+                // Popcorn playback
+                var skeleton = $('#skeleton').html();
+                var $videos = $('.vids');
+
+                $.each(clips['items'], function(k, v) {
+    // todo: needs to work off actual mixer
+
+    $el = $(skeleton);
+    $el.prop('id', k);
+    $videos.append($el);
+    v.$el = $el;
+                //console.log($videos, v.$el)
+                // popcorn for every video
+                v.popcorn = Popcorn.youtube('#' + k, 'http://www.youtube.com/watch?autoplay=0&v=' + v.yt);
+             //console.log('something',v.$el.show());
+             v.popcorn.pause();
+             v.popcorn.autoplay(false);
+             v.popcorn.on('loadedmetadata', function() {
+              v.popcorn.currentTime(v.in);
+
+          });
+                //console.log(v, $el)
+            });
+        // }
+
 
         function playback(sequence, doneCallback) {
-        	console.log(sequence)
-        	var next = sequence[0];
-			var v = clips['items'][next];
+            console.log(sequence)
+            var next = sequence[0];
+            var v = clips['items'][next];
 
-			v.$el.show();
-			// //v.pc.currentTime();
-			//v.popcorn.unmute();
-			v.popcorn.play(v.in);
+            v.$el.show();
+            // //v.pc.currentTime();
+            //v.popcorn.unmute();
+            v.popcorn.play(v.in);
 
-	      	v.popcorn.cue(v.out, function() {
-	            v.popcorn.pause();
-	            v.$el.hide();
-	            var rem = sequence.slice(1);
-	            console.log(rem.length, sequence)
-	            if (!rem.length) doneCallback();
-	            playback(rem, doneCallback);
-	        });
-	  	}
-        
-    	// /placeClips();
+            v.popcorn.cue(v.out, function() {
+                v.popcorn.pause();
+                v.$el.hide();
+                var rem = sequence.slice(1);
+                console.log(rem.length, sequence)
+                if (!rem.length) doneCallback();
+                playback(rem, doneCallback);
+            });
+        }
+
+        // /placeClips();
 
         window.playback = playback;
-      
-	});
 
-    </script>
-  </body>
+    });
+</script>
+</body>
 </html>

@@ -1,7 +1,7 @@
 # global define
 define(["Config", "Utils", "jquery", "moment", "momentlangde", "handlebars"], (Config, Utils) ->
     'use strict'
-            
+
     class App
         constructor: (greeting) ->
             moment.lang("de")
@@ -10,13 +10,17 @@ define(["Config", "Utils", "jquery", "moment", "momentlangde", "handlebars"], (C
                 Heute ist der #{moment().format("D. MMMM YYYY")}
             """
             @hotTemplateAction()
-        
+            @dumpAndRun()
+
         hotTemplateAction: ->
             source = $("#sample-template").html()
             template = Handlebars.compile(source)
-            
+
             $element = $($.trim(template
                 someNumber: someData.testArray.length
             ))
             $("body").append $element
+
+
+        dumpAndRun: ->
 )
