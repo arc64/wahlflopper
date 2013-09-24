@@ -44,8 +44,13 @@ ul#sortable {
     min-height: 150px;
 }
 
-li { 
-    cursor: pointer;
+#sortable .panel {
+    cursor: move;
+}
+
+.videoPlaceholder {
+    background: #fbfbfb;
+    border-color: #eee;
 }
 
 /* .mixer */

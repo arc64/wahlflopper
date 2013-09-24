@@ -284,13 +284,19 @@
 
 		// Sort the items in the picker
 		$( "#sortable" ).sortable({
-      		placeholder: "video-hightlight",
+			placeholder: "video videoPlaceholder col-2 col-sm-2 col-lg-2 panel panel-default",
+			revert: true,
+			forcePlaceholderSize: true,
+			axis: "x",
   			stop: function(event, ui) {
   				var id = ui.item.data('videoid');
   				var item = getItem(id);
   				removeItemFromMixer(id);
   				addItemToMixer(id, item[0], ui.item.index());
-		    }
+			},
+			start: function (e, ui) {
+				$(ui.placeholder).css("height", $(ui.item.children()).height()+"px")
+			}
     	});
 
     	$( "#sortable" ).disableSelection();
