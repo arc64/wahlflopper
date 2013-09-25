@@ -10,12 +10,6 @@ function removeItemFromMixer(id) {
     $('body').data('videoid', id).removeClass('inMixer');
 }
 
-function addItemToMixer(id, index) {
-    inMixer.splice(index, 0, id);
-    // console.log(inMixer)
-    $('body').data('videoid', id).addClass('inMixer');
-}
-
 function getItem(id) {
     return $.grep(inMixer, function(e){ return e == id; });
 }
@@ -37,19 +31,6 @@ function getItem(id) {
             // $('.mixer #sortable').html(template(videos));
             // return;
         }
-
-        function renderPicker(){
-            // var template = Handlebars.compile(pickerTemplate);
-
-            // $('.picker').append(template(clips));
-            console.log('renderPicker')
-        }
-
-        // getting down to business
-        // render some stuff
-        //renderMixer();
-        //renderPicker();
-
 
         // event heaven
         $('.mixer').delegate( ".close", "click", function(e) {

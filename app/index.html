@@ -23,7 +23,7 @@
 
 </head>
 <body>
-    <script id="video-picker" type="text/x-handlebars-template">
+    <script id="video-mixer" type="text/x-handlebars-template">
         {{#items}}
         <li data-videoid="{{id}}" class="video col-2 col-sm-2 col-lg-2">
             <div class="panel panel-default">
@@ -38,9 +38,9 @@
             </div>
         </li>
         {{/items}}
-    </script><!-- Video Picker -->
+    </script><!-- Video Mixer -->
 
-    <script id="video-mixer" type="text/x-handlebars-template">
+    <script id="video-picker" type="text/x-handlebars-template">
         {{#each items}}
             <div class="video col-md-6" data-videoid={{id}}>
                 <h3>{{title}}</h3>
@@ -51,7 +51,7 @@
                 <a href="#mixer" type="button" class="btn btn-success add"><span class="glyphicon glyphicon-plus"></span></a>
             </div>
         {{/each}}
-    </script><!-- mixer -->
+    </script><!-- Video Picker -->
 
     <div class="jumbotron">
         <div class="container">
