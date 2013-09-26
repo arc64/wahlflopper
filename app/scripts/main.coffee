@@ -1,24 +1,29 @@
 require.config(
     paths:
-        popcorn: "../bower_components/popcornjs"
         jquery: "../bower_components/jquery/jquery"
-        jqueryui: "../bower_components/jquery/jquery-ui"
+        jqueryui: "../bower_components/jquery-ui/jqueryui"
         handlebars: "../bower_components/handlebars/handlebars"
-        moment: "../bower_components/momentjs/moment"
-        momentlangde: "vendor/moments-lang-de"
-        history: "vendor/history.js"
-        bootstrap: "vendor/boostrap"
+        historyjs: "vendor/jquery.history"
+        popcorn: "vendor/popcorn-complete"
+        bootstrap: "../bower_components/bootstrap/dist/js/bootstrap"
+        text: "vendor/requirejs-plugins/text"
+        hb: "vendor/requirejs-plugins/hb"
     shim:
         handlebars:
             exports: "Handlebars"
-        moment:
-            exports: "moment"
-        momentlangde:
-            deps: ["moment"]
+        historyjs:
+            exports: "History"
+            deps: [
+                "jquery"
+            ]
+        bootstrap:
+            deps: [
+                "jquery"
+            ]
 )
 
 require(["App"], (App) ->
     "use strict"
 
-    app = new App("Howdy")
+    app = new App()
 )

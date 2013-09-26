@@ -1,41 +1,23 @@
-*.py[cod]
-
-# C extensions
-*.so
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-lib
-lib64
-
-.DS_Store
-.tmp/
+.sass-cache
+.tmp
+dist/
+dist-zips/
+dev/
+temp/
 node_modules/
-.sass-cache/
-app/bower_components/
+app/bower_components
 
-# Installer logs
-pip-log.txt
+etc/scripts/output
 
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
+# OS files
+.DS_Store
+Thumbs.db
 
-# Translations
-*.mo
+# TextMate files
+*.tmproj
+*.tmproject
+tmtags
 
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
+# SublimeText project files
+*.sublime-project
+*.sublime-workspace
