@@ -52,7 +52,7 @@ define(
 
         mickey:
             id: "mickey"
-            title: "Knockout! "
+            title: "Knockout!"
             yt: "kT_pS_4OO7E"
             in: 234
             out: 240

@@ -27,6 +27,10 @@ $default-transition-function: "ease-in-out";
     height: 400px;
 }
 
+.videolist {
+    overflow: hidden;
+}
+
 .jumbotron {
     padding-top:0;
 }

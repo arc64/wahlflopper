@@ -73,7 +73,7 @@ define([
             $("body").append template({})
             return
         renderPicker = ->
-            template = PickerTemplate
+            template = VideoTemplate
             $(".picker").append template(Clips)
             
         renderMixer()
@@ -93,11 +93,12 @@ define([
             playback inMixer, ->
                 console.log "we are done"
                 
-        $("#sortable").sortable
+        $(".videolist").sortable
+            connectWith: ".videolist"
             placeholder: "video videoPlaceholder col-2 col-sm-2 col-lg-2 panel panel-default"
             revert: true
+            items: ".video"
             forcePlaceholderSize: true
-            axis: "x"
             stop: (event, ui) ->
                 id = ui.item.data("videoid")
                 item = getItem(id)
@@ -108,7 +109,7 @@ define([
             start: (e, ui) ->
                 $(ui.placeholder).css "height", $(ui.item.children()).height() + "px"
 
-        $("#sortable").disableSelection()
+        $(".videolist").disableSelection()
         
         # Popcorn playback
         skeleton = $('#skeleton').html()
@@ -126,8 +127,6 @@ define([
             v.popcorn.autoplay(false)
             v.popcorn.on 'loadedmetadata', () ->
                 v.popcorn.currentTime(v.in)
-                
-
 
             playback = (sequence, doneCallback) ->
                 console.log(sequence)
